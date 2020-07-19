@@ -43,6 +43,7 @@ return [
 
         'api' => [
             'driver' => 'token',
+            'driver' => 'jwt', // jwtの設定
             'provider' => 'users',
             'hash' => false,
         ],
