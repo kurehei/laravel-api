@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['api']], function() {
-    Route::resource('posts', 'Api\PostsController', ['except' => ['create', 'except']]);
+
+Route::prefix('V1_0')->group(function () {
+
+    Route::middleware([
+        'jwt_auth',  // JWTトークンによる認証を強制 - \Tymon\JWTAuth\Http\Middleware\Authenticate::class
+    ])->group(function () {
+        Route::post('/refresh-token', 'Api\V1_0\RefreshTokenController@refreshToken');
+    });
+
+    Route::group([
+        "middleware" => 'guest:api', // 認証不要なAPIとして設定
+    ], function () {
+        Route::post('/users/me', 'Api\V1_0\RegisterController@register');
+        Route::post('/login', 'Api\V1_0\LoginController@login');
+    });
 });
