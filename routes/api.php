@@ -23,10 +23,6 @@ Route::prefix('V1_0')->group(function () {
         Route::post('/refresh-token', 'Api\V1_0\RefreshTokenController@refreshToken');
     });
 
-    Route::group([
-        "middleware" => 'guest:api', // 認証不要なAPIとして設定
-    ], function () {
-        Route::post('/users/me', 'Api\V1_0\RegisterController@register');
-        Route::post('/login', 'Api\V1_0\LoginController@login');
-    });
+    Route::post('register', 'Api\V1_0\RegisterController@register');
+    Route::post('/login', 'Api\V1_0\LoginController@login');
 });

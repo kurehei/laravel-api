@@ -18,7 +18,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -39,7 +39,7 @@ class LoginRequest extends FormRequest
     {
         $res = response()->json([
             'status' => 400,
-            'error' => validator()->errors()
+            'errors' => $validator->errors()
         ], 400);
         throw new HttpResponseException($res);
     }

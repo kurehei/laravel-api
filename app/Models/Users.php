@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Models;
-// オートロードは、requireなしで、use演算子を定義するだけで、PHPのクラスを使えるようにする機能です。
 
-use Carbon\Carbon;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,15 +10,19 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+
+    protected $carbon;
+    protected $now;
+
     protected $primaryKey = 'user_id';
-    //
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'user_name', 'email', 'password',
     ];
 
     /**
@@ -38,28 +39,26 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-    // キャストを行ってくれるバリューの部分で変換したい型を指定する
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    // コンストラクタ
-    function __construct()
+
+    public function getUserId()
     {
-        $this->carbon = $carbon ?? new Carbon();
-        $this->now = $this->carbon->timestamp;
+        return  $this->user_id;
     }
 
-     //  アクセサメソッド
-     public function getUserName() {
-         return $this->name();
-     }
+    public function getUserName()
+    {
+        return $this->user_name;
+    }
 
-     public function getUserEmail() {
-         return $this->email();
-     }
+    public function getUserEmail()
+    {
+        return $this->email;
+    }
 
-    // jwtで定義しなければならないメソッド
     public function getJWTIdentifier()
     {
         return $this->getKey();

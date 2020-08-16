@@ -15,7 +15,7 @@ class RegistUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class RegistUserRequest extends FormRequest
             //
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'pasword' => 'required|string|min:6|max:10'
+            'password' => 'required|string|min:6|max:10'
         ];
     }
 
@@ -38,7 +38,7 @@ class RegistUserRequest extends FormRequest
     {
         $res = response()->json([
             'status' => 400,
-            'error' => validator()->errors()
+            'errors' => $validator->errors()
         ], 400);
         throw new HttpResponseException($res);
     }

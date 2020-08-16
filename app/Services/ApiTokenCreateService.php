@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use App\User;
 use Carbon\Carbon;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
@@ -31,6 +31,7 @@ class ApiTokenCreateService extends Service
   // token付与のjsonを返す
   public function respondWithToken(): Object
   {
+    return response()->json(['id' => 1]);
     return response()->json([
       'token' => [
         'access_token' => $this->createAccessToken(),

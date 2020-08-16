@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class RefreshTokenController extends Controller
 {
   private $user;
-  private $user_id;
+  private $id;
   private $access_token;
 
   public function __construct()
@@ -29,8 +29,8 @@ class RefreshTokenController extends Controller
   public function refreshToken(): JsonResponse
   {
     $this->access_token = Auth::gurad('api')->refresh();
-    $this->user_id = (auth()->user()->user_id);
-    $this->user = User::where('user_id', $this->user_id)->first();
+    $this->id = (auth()->user()->id);
+    $this->user = User::where('id', $this->id)->first();
     return $this->respondWithToken();
   }
 
@@ -46,8 +46,8 @@ class RefreshTokenController extends Controller
         'access_token' => $this->access_token,
       ],
       'profile' => [
-        'id' => $this->user->user_id,
-        'name' => $this->user->user_name,
+        'id' => $this->user->id,
+        'name' => $this->user->name,
         'email' => $this->user->email
       ]
     ]);
