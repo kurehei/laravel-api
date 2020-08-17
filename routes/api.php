@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::group(['middleware' => ['api']], function(){
+    Route::resource('posts', 'Api\PostsController');
+});
 
 Route::prefix('V1_0')->group(function () {
 
