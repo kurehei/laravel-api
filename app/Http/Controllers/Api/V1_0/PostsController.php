@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1_0;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Http\Controllers\Controller;
+use Storage;
+
 
 class PostsController extends Controller
 {
@@ -22,6 +24,11 @@ class PostsController extends Controller
     public function store(Request $request) {
         $post = new Post;
         $post->content = $request->input('content');
+        $image = $request->file("image");
+        // $imageを、myprefixというディレクトリに'public'という名前ど保存
+        $path = Storage::disk('s3')->putFile('myprefix', $image, 'public');
+        // 画像のurlを取得する
+        $post->image = Storage::disk('s3')->url($path);
         $post->save();
         return $post;
     }
