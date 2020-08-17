@@ -16,7 +16,7 @@ class LoginController extends Controller
     }
     public function login(LoginRequest $request)
     {
-        $input = $request->only('email', 'password');
+        $input = $request->only(['email', 'password']);
         $token = null;
 
         if (!$token = JWTAuth::attempt($input)) {
@@ -25,10 +25,8 @@ class LoginController extends Controller
                 'message' => 'Invalid Email or Password',
             ], 401);
         }
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->input('email'))->first();
         $ApiTokenCreateService = new ApiTokenCreateService($user);
-        $ApiTokenCreateService->respondWithToken();
-
-        return $user;
+        return $ApiTokenCreateService->respondWithToken();
     }
 }

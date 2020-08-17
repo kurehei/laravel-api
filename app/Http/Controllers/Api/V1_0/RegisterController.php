@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1_0;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RegistUserRequest;
-use App\Models\User;
+use App\User;
 use App\Services\ApiTokenCreateService;
 
 class RegisterController extends Controller
@@ -17,7 +17,7 @@ class RegisterController extends Controller
     $user->password = bcrypt($request->password);
     $user->save();
 
-    dd($userId = $user->id);
+    $userId = $user->id;
     $user = User::find($userId);
     $ApiTokenCreateService = new ApiTokenCreateService($user);
 

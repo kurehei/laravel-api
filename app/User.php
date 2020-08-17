@@ -14,7 +14,7 @@ class User extends Authenticatable implements JWTSubject
     protected $carbon;
     protected $now;
 
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.

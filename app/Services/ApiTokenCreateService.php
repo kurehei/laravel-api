@@ -31,18 +31,17 @@ class ApiTokenCreateService extends Service
   // token付与のjsonを返す
   public function respondWithToken(): Object
   {
-    return response()->json(['id' => 1]);
     return response()->json([
       'token' => [
-        'access_token' => $this->createAccessToken(),
-        'refresh_token' => $this->createRefreshToken()
+          'access_token' => $this->createAccessToken(),
+          'refresh_token' => $this->createRefreshToken()
       ],
       'profile' => [
-        'id' => $this->user->getId(),
-        'name' => $this->user->getUserName(),
-        'email' => $this->user->getUserEmail()
+          'id' => $this->user->getId(),
+          'name' => $this->user->getUserName(),
+          'email' => $this->user->getUserEmail()
       ]
-    ]);
+  ]);
   }
 
   /**
