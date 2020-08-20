@@ -26,7 +26,7 @@ class PostsController extends Controller
         $post->content = $request->input('content');
         $image = $request->file("image");
         // $imageを、myprefixというディレクトリに'public'という名前ど保存
-        $path = Storage::disk('s3')->putFile('myprefix', $image, 'public');
+        $path = Storage::disk('s3')->putFile('kanly-practice-s3', $image, 'public');
         // 画像のurlを取得する
         $post->image = Storage::disk('s3')->url($path);
         $post->save();
