@@ -12,7 +12,6 @@ class PostsController extends Controller
 {
     public function index() {
         $posts = Post::all();
-        // apimodeでデータを返す
         return $posts;
     }
 
