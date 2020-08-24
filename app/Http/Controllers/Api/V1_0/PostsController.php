@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Api\V1_0;
-
+use App\Mail\OrderMail;
+use App\Mail\SampleMail;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
 use App\Post;
@@ -23,11 +25,15 @@ class PostsController extends Controller
     public function store(Request $request) {
         $post = new Post;
         $post->content = $request->input('content');
-        $image = $request->file("image");
+        $mailContent = $request->input('content');
+        // 宛先
+        $email = 'kure@example.com';
+        Mail::to($email)->send(new SampleMail($mailContent));
+        //$image = $request->file("image");
         // $imageを、myprefixというディレクトリに'public'という名前ど保存
-        $path = Storage::disk('s3')->putFile('kanly-practice-s3', $image, 'public');
+        //$path = Storage::disk('s3')->putFile('kanly-practice-s3', $image, 'public');
         // 画像のurlを取得する
-        $post->image = Storage::disk('s3')->url($path);
+        //$post->image = Storage::disk('s3')->url($path);
         $post->save();
         return $post;
     }
